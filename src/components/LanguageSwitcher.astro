@@ -1,0 +1,43 @@
+---
+import IconWrapper from './ui/IconWrapper.astro';
+
+const currentPath = Astro.url.pathname;
+const currentLang = 'zh' as 'zh' | 'en'; // 預設語言，實際實現時會動態確定
+---
+
+<div class="relative inline-block text-left">
+  <button id="language-menu-button" class="flex items-center space-x-1 text-white hover:text-democratic-red transition">
+    <span>{currentLang === 'zh' ? '中文' : 'English'}</span>
+    <IconWrapper name="chevron-down" size={16} />
+  </button>
+  
+  <div id="language-menu" class="hidden absolute right-0 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="language-menu-button">
+      <a href={`/en${currentPath}`} class={`block px-4 py-2 text-sm ${currentLang === 'en' ? 'bg-gray-100 text-democratic-red' : 'text-black hover:bg-gray-100'}`} role="menuitem">
+        English
+      </a>
+      <a href={currentPath.replace('/en', '') || '/'} class={`block px-4 py-2 text-sm ${currentLang === 'zh' ? 'bg-gray-100 text-democratic-red' : 'text-black hover:bg-gray-100'}`} role="menuitem">
+        中文
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const languageMenuButton = document.getElementById('language-menu-button');
+  const languageMenu = document.getElementById('language-menu');
+  
+  if (languageMenuButton && languageMenu) {
+    languageMenuButton.addEventListener('click', () => {
+      languageMenu.classList.toggle('hidden');
+    });
+    
+    // 點擊外部關閉選單
+    document.addEventListener('click', (event) => {
+      const target = event.target as Node;
+      if (!languageMenuButton.contains(target) && !languageMenu.contains(target)) {
+        languageMenu.classList.add('hidden');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,61 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import IconWrapper from './ui/IconWrapper.astro';
+
+const navItems = [
+  { href: '/projects', label: '專案', icon: 'folder' },
+  { href: '/meetups', label: '會議', icon: 'calendar' },
+  { href: '/blog', label: '部落格', icon: 'file-text' },
+  { href: '/faq', label: '常見問題', icon: 'help-circle' },
+  { href: '/about', label: '關於我們', icon: 'info' },
+];
+---
+
+<header class="bg-black text-white sticky top-0 z-10">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <a href="/" class="flex items-center">
+        <img src="/assets/images/vtaiwan-logo.svg" alt="vTaiwan Logo" class="h-8 w-auto" />
+        <span class="ml-2 text-xl font-bold">vTaiwan</span>
+      </a>
+      
+      <div class="hidden md:flex items-center space-x-6">
+        {navItems.map(item => (
+          <a href={item.href} class="hover:text-democratic-red transition flex items-center gap-1">
+            <IconWrapper name={item.icon} size={16} />
+            <span>{item.label}</span>
+          </a>
+        ))}
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <LanguageSwitcher />
+        <button id="mobile-menu-button" class="md:hidden text-white">
+          <IconWrapper name="menu" size={24} />
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="mobile-menu" class="md:hidden hidden bg-black border-t border-gray-700">
+    <div class="container mx-auto px-4 py-3">
+      {navItems.map(item => (
+        <a href={item.href} class="flex items-center gap-2 py-2 hover:text-democratic-red transition">
+          <IconWrapper name={item.icon} size={16} />
+          <span>{item.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>

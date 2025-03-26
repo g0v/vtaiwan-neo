@@ -1,0 +1,39 @@
+---
+import * as LucideIcons from 'lucide-astro';
+
+export interface Props {
+  name: string;
+  size?: number;
+  color?: string;
+  type?: 'default' | 'primary' | 'teal' | 'amber';
+  class?: string;
+}
+
+const { 
+  name, 
+  size = 24, 
+  color,
+  type = 'default',
+  class: className = '' 
+} = Astro.props;
+
+const colorMap = {
+  default: '#000000',
+  primary: '#D80000',
+  teal: '#008888',
+  amber: '#DB7700'
+};
+
+const iconColor = color || colorMap[type];
+
+// 動態選擇圖標組件
+const IconComponent = LucideIcons[name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (g) => g[1].toUpperCase())];
+---
+
+{IconComponent ? (
+  <IconComponent size={size} color={iconColor} class={className} />
+) : (
+  <div class="w-{size} h-{size} bg-gray-200 flex items-center justify-center rounded">
+    <span class="text-xs text-gray-500">Icon not found</span>
+  </div>
+)}

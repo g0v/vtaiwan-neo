@@ -1,0 +1,9 @@
+---
+import Layout from './.Layout.astro'
+export type { Props } from './index.d.ts'
+---
+
+<Layout iconName="arrow-right" {...Astro.props}>
+	<path d="M5 12h14" />
+	<path d="m12 5 7 7-7 7" />
+</Layout>

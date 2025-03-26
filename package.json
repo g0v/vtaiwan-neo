@@ -1,0 +1,23 @@
+{
+  "name": "vtaiwan-neo",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.0.0",
+    "astro": "^3.0.0",
+    "astro-decap-cms-oauth": "^0.2.2",
+    "lucide-astro": "^0.483.0",
+    "tailwindcss": "^3.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/mdx": "^1.0.0"
+  }
+}

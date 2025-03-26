@@ -1,0 +1,492 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'lucide-astro';
+import IconWrapper from '../../components/ui/IconWrapper.astro';
+
+export function getStaticPaths() {
+  // 在實際實現中，這些數據會從 CMS 或內容集合中獲取
+  return [
+    {
+      params: { slug: 'digital-id' },
+      props: {
+        project: {
+          title: '數位身分證',
+          description: '討論數位身分證的隱私與安全議題，探討如何在便利性與資安之間取得平衡。',
+          fullDescription: `
+            數位身分證（Digital ID）是政府推動的新一代身分證明系統，結合實體卡片與數位功能，提供更便捷的身分驗證與政府服務。
+            
+            然而，數位身分證的推行也引發了隱私保護、資安風險、個資集中化等疑慮。本專案旨在透過公民參與，討論數位身分證的設計、實施與監督機制，確保在提升便利性的同時，也能保障公民的隱私權與資訊安全。
+            
+            我們邀請各界專家與公民共同參與，從技術、法律、政策等多元角度，探討數位身分證的最佳實踐方案。
+          `,
+          status: 'active',
+          startDate: '2024-09-15',
+          icon: 'id-card',
+          color: 'primary',
+          category: '數位政策',
+          participantsCount: 256,
+          stages: [
+            {
+              name: '議題收集',
+              status: 'completed',
+              date: '2024-09-15 - 2024-10-15',
+              description: '收集各界對數位身分證的疑慮與建議'
+            },
+            {
+              name: '專家諮詢',
+              status: 'completed',
+              date: '2024-10-20 - 2024-11-20',
+              description: '邀請資安、法律、人權等領域專家提供意見'
+            },
+            {
+              name: '公民討論',
+              status: 'active',
+              date: '2024-12-01 - 2025-02-28',
+              description: '透過線上平台與實體會議進行公民討論'
+            },
+            {
+              name: '政策建議',
+              status: 'upcoming',
+              date: '2025-03-15 - 2025-04-15',
+              description: '整理討論結果，形成具體政策建議'
+            },
+            {
+              name: '政府回應',
+              status: 'upcoming',
+              date: '2025-05-01 - 2025-06-01',
+              description: '政府相關部門對政策建議進行回應'
+            }
+          ],
+          team: [
+            {
+              name: '林大方',
+              role: '專案協調人',
+              organization: 'vTaiwan',
+              avatar: '/assets/images/avatars/avatar1.jpg'
+            },
+            {
+              name: '陳資安',
+              role: '資安顧問',
+              organization: '台灣資安協會',
+              avatar: '/assets/images/avatars/avatar2.jpg'
+            },
+            {
+              name: '王法律',
+              role: '法律顧問',
+              organization: '台灣人權促進會',
+              avatar: '/assets/images/avatars/avatar3.jpg'
+            }
+          ],
+          relatedMeetups: [
+            {
+              title: '數位身分證線上諮詢會議',
+              date: '2025-04-15',
+              time: '19:00-21:00',
+              location: '線上會議',
+              url: '/meetups/digital-id-consultation'
+            },
+            {
+              title: '數位身分證隱私保護工作坊',
+              date: '2025-03-10',
+              time: '14:00-17:00',
+              location: '台北市社會創新實驗中心',
+              url: '/meetups/digital-id-privacy-workshop'
+            }
+          ],
+          relatedPosts: [
+            {
+              title: '數位身分證諮詢會議摘要',
+              date: '2025-03-15',
+              url: '/blog/digital-id-meeting-summary'
+            },
+            {
+              title: '專家觀點：數位身分證的隱私保護機制',
+              date: '2025-02-20',
+              url: '/blog/digital-id-privacy-protection'
+            },
+            {
+              title: '國際經驗：愛沙尼亞數位身分證的啟示',
+              date: '2025-01-25',
+              url: '/blog/estonia-digital-id'
+            }
+          ],
+          resources: [
+            {
+              title: '數位身分證規劃報告',
+              type: 'pdf',
+              url: '#'
+            },
+            {
+              title: '數位身分證隱私影響評估',
+              type: 'pdf',
+              url: '#'
+            },
+            {
+              title: '專家諮詢會議紀錄',
+              type: 'doc',
+              url: '#'
+            },
+            {
+              title: '公民討論平台',
+              type: 'link',
+              url: '#'
+            }
+          ]
+        }
+      }
+    },
+    // 其他專案路徑...
+  ];
+}
+
+const { project } = Astro.props;
+
+// 根據狀態獲取顏色
+function getStatusColor(status) {
+  switch(status) {
+    case 'completed': return 'gray-400';
+    case 'active': return 'jade-green';
+    case 'upcoming': return 'wheat-yellow';
+    default: return 'gray-400';
+  }
+}
+
+// 根據狀態獲取圖標
+function getStatusIcon(status) {
+  switch(status) {
+    case 'completed': return 'check-circle';
+    case 'active': return 'circle';
+    case 'upcoming': return 'clock';
+    default: return 'circle';
+  }
+}
+
+// 根據文件類型獲取圖標
+function getFileIcon(type) {
+  switch(type) {
+    case 'pdf': return 'file-text';
+    case 'doc': return 'file';
+    case 'link': return 'link';
+    default: return 'file';
+  }
+}
+---
+
+<BaseLayout title={`${project.title} - vTaiwan`} description={project.description}>
+  <!-- Hero Section -->
+  <section class="bg-black text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center gap-2 text-gray-300 mb-4">
+        <a href="/" class="hover:text-white transition">首頁</a>
+        <Icon name="chevron-right" size={16} />
+        <a href="/projects" class="hover:text-white transition">專案</a>
+        <Icon name="chevron-right" size={16} />
+        <span>{project.title}</span>
+      </div>
+      
+      <div class="md:flex items-start gap-6">
+        <div class="md:w-2/3">
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">{project.title}</h1>
+          <p class="text-xl mb-6">{project.description}</p>
+          
+          <div class="flex flex-wrap gap-4 text-sm">
+            <div class="bg-gray-800 px-3 py-1 rounded-full flex items-center gap-1">
+              <span class={`inline-block w-2 h-2 rounded-full bg-jade-green mr-1`}></span>
+              <span>{project.status === 'active' ? '進行中' : '已完成'}</span>
+            </div>
+            
+            <div class="bg-gray-800 px-3 py-1 rounded-full flex items-center gap-1">
+              <IconWrapper name="calendar" size={14} color="#FFFFFF" />
+              <span>開始於 {project.startDate}</span>
+            </div>
+            
+            <div class="bg-gray-800 px-3 py-1 rounded-full flex items-center gap-1">
+              <IconWrapper name="users" size={14} color="#FFFFFF" />
+              <span>{project.participantsCount} 人參與</span>
+            </div>
+            
+            <div class="bg-gray-800 px-3 py-1 rounded-full flex items-center gap-1">
+              <IconWrapper name="tag" size={14} color="#FFFFFF" />
+              <span>{project.category}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="md:w-1/3 mt-6 md:mt-0 flex justify-end">
+          <div class="flex gap-2">
+            <a href="#join" class="btn-primary rounded-md">
+              參與討論
+            </a>
+            <a href="#subscribe" class="btn-outline bg-transparent text-white border-white rounded-md">
+              訂閱更新
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <div class="md:flex gap-8">
+        <!-- Main Content -->
+        <div class="md:w-2/3">
+          <!-- Project Description -->
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">
+              <span class="title-underline">專案說明</span>
+            </h2>
+            <div class="prose max-w-none">
+              {project.fullDescription.split('\n\n').map(paragraph => (
+                <p class="mb-4">{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Project Timeline -->
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">
+              <span class="title-underline">專案進度</span>
+            </h2>
+            
+            <div class="relative">
+              {project.stages.map((stage, index) => (
+                <div class={`flex mb-8 ${index === project.stages.length - 1 ? '' : 'timeline-item'}`}>
+                  <div class="mr-4 relative">
+                    <div class={`w-8 h-8 rounded-full bg-${getStatusColor(stage.status)} flex items-center justify-center z-10 relative`}>
+                      <IconWrapper name={getStatusIcon(stage.status)} size={16} color="#FFFFFF" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold">{stage.name}</h3>
+                    <p class="text-gray-500 text-sm mb-2">{stage.date}</p>
+                    <p class="text-gray-700">{stage.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Project Team -->
+          <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">
+              <span class="title-underline">專案團隊</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+              {project.team.map(member => (
+                <div class="border border-gray-200 p-6 rounded-lg text-center">
+                  <div class="w-20 h-20 rounded-full bg-gray-300 mx-auto mb-4 overflow-hidden">
+                    <img src={member.avatar} alt={member.name} class="w-full h-full object-cover" />
+                  </div>
+                  <h3 class="font-bold text-lg">{member.name}</h3>
+                  <p class="text-gray-500">{member.role}</p>
+                  <p class="text-gray-700 text-sm">{member.organization}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Join Discussion -->
+          <div id="join" class="mb-12 bg-gray-100 p-8 rounded-lg">
+            <h2 class="text-2xl font-bold mb-6">參與討論</h2>
+            <p class="mb-6">
+              我們歡迎所有公民參與數位身分證的討論，分享您的想法、疑慮與建議。您可以透過以下方式參與：
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="border border-gray-200 bg-white p-6 rounded-lg">
+                <div class="w-12 h-12 rounded-full bg-democratic-red/10 flex items-center justify-center mb-4">
+                  <IconWrapper name="message-circle" type="primary" size={24} />
+                </div>
+                <h3 class="font-bold text-lg mb-2">線上討論</h3>
+                <p class="text-gray-700 mb-4">
+                  在我們的線上討論平台上，您可以閱讀其他參與者的意見，並分享您的觀點。
+                </p>
+                <a href="#" class="btn-primary rounded-md inline-block">
+                  前往討論平台
+                </a>
+              </div>
+              
+              <div class="border border-gray-200 bg-white p-6 rounded-lg">
+                <div class="w-12 h-12 rounded-full bg-jade-green/10 flex items-center justify-center mb-4">
+                  <IconWrapper name="calendar" type="teal" size={24} />
+                </div>
+                <h3 class="font-bold text-lg mb-2">參加會議</h3>
+                <p class="text-gray-700 mb-4">
+                  參加我們的線上或實體會議，與專家和其他公民面對面交流討論。
+                </p>
+                <a href="/meetups" class="btn-secondary rounded-md inline-block">
+                  查看會議行程
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Subscribe -->
+          <div id="subscribe" class="bg-gray-100 p-8 rounded-lg">
+            <h2 class="text-2xl font-bold mb-6">訂閱專案更新</h2>
+            <p class="mb-6">
+              訂閱此專案的電子郵件通知，獲取最新進展、會議通知與討論摘要。
+            </p>
+            
+            <div class="flex max-w-md">
+              <input
+                type="email"
+                placeholder="您的電子郵件"
+                class="flex-grow border-gray-300 rounded-l-md shadow-sm focus:border-democratic-red focus:ring focus:ring-democratic-red/20"
+              />
+              <button class="btn-primary rounded-r-md">
+                訂閱
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="md:w-1/3 mt-12 md:mt-0">
+          <div class="sticky top-20">
+            <!-- Related Meetups -->
+            <div class="mb-8 bg-gray-100 p-6 rounded-lg">
+              <h3 class="font-bold text-lg mb-4">相關會議</h3>
+              
+              <div class="space-y-4">
+                {project.relatedMeetups.map(meetup => (
+                  <a href={meetup.url} class="block bg-white p-4 rounded border border-gray-200 hover:border-jade-green transition">
+                    <h4 class="font-bold mb-2">{meetup.title}</h4>
+                    <div class="flex flex-wrap gap-2 text-sm text-gray-700">
+                      <div class="flex items-center gap-1">
+                        <IconWrapper name="calendar" type="teal" size={14} />
+                        <span>{meetup.date}</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <IconWrapper name="clock" type="teal" size={14} />
+                        <span>{meetup.time}</span>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+              
+              <div class="mt-4">
+                <a href="/meetups" class="text-jade-green hover:text-jade-green/80 transition flex items-center gap-1 justify-end">
+                  <span>查看所有會議</span>
+                  <Icon name="arrow-right" size={16} color="#008888" />
+                </a>
+              </div>
+            </div>
+            
+            <!-- Related Blog Posts -->
+            <div class="mb-8 bg-gray-100 p-6 rounded-lg">
+              <h3 class="font-bold text-lg mb-4">相關文章</h3>
+              
+              <div class="space-y-4">
+                {project.relatedPosts.map(post => (
+                  <a href={post.url} class="block bg-white p-4 rounded border border-gray-200 hover:border-wheat-yellow transition">
+                    <h4 class="font-bold mb-1">{post.title}</h4>
+                    <div class="text-sm text-gray-500">{post.date}</div>
+                  </a>
+                ))}
+              </div>
+              
+              <div class="mt-4">
+                <a href="/blog" class="text-wheat-yellow hover:text-wheat-yellow/80 transition flex items-center gap-1 justify-end">
+                  <span>查看所有文章</span>
+                  <Icon name="arrow-right" size={16} color="#DB7700" />
+                </a>
+              </div>
+            </div>
+            
+            <!-- Resources -->
+            <div class="bg-gray-100 p-6 rounded-lg">
+              <h3 class="font-bold text-lg mb-4">資源下載</h3>
+              
+              <div class="space-y-3">
+                {project.resources.map(resource => (
+                  <a href={resource.url} class="flex items-center gap-3 bg-white p-3 rounded border border-gray-200 hover:border-democratic-red transition">
+                    <div class="w-8 h-8 rounded-full bg-democratic-red/10 flex items-center justify-center">
+                      <IconWrapper name={getFileIcon(resource.type)} type="primary" size={16} />
+                    </div>
+                    <span>{resource.title}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Projects -->
+  <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-8">
+        <span class="title-underline">相關專案</span>
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/projects/online-voting" class="card p-6 hover:border-democratic-red transition">
+          <div class="flex items-start mb-4">
+            <div class="w-12 h-12 rounded-full bg-democratic-red/10 flex items-center justify-center mr-4">
+              <IconWrapper name="vote" type="primary" size={24} />
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">線上投票系統</h3>
+              <div class="flex items-center mt-1">
+                <span class="inline-block w-2 h-2 rounded-full bg-jade-green mr-2"></span>
+                <span class="text-sm text-gray-600">進行中</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-700">研究安全可靠的線上投票系統，提升公民參與度與決策效率。</p>
+        </a>
+        
+        <a href="/projects/privacy-protection" class="card p-6 hover:border-democratic-red transition">
+          <div class="flex items-start mb-4">
+            <div class="w-12 h-12 rounded-full bg-democratic-red/10 flex items-center justify-center mr-4">
+              <IconWrapper name="shield" type="primary" size={24} />
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">網路隱私保護</h3>
+              <div class="flex items-center mt-1">
+                <span class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
+                <span class="text-sm text-gray-600">已完成</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-700">討論個人資料保護與網路隱私權的法規與實踐。</p>
+        </a>
+        
+        <a href="/projects/open-data" class="card p-6 hover:border-democratic-red transition">
+          <div class="flex items-start mb-4">
+            <div class="w-12 h-12 rounded-full bg-jade-green/10 flex items-center justify-center mr-4">
+              <IconWrapper name="database" type="teal" size={24} />
+            </div>
+            <div>
+              <h3 class="font-bold text-lg">開放政府資料</h3>
+              <div class="flex items-center mt-1">
+                <span class="inline-block w-2 h-2 rounded-full bg-jade-green mr-2"></span>
+                <span class="text-sm text-gray-600">進行中</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-700">推動政府資料開放與應用，建立資料標準與開放授權機制。</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    bottom: -40px;
+    left: 15px;
+    width: 2px;
+    background-color: #E0E0E0;
+  }
+</style>

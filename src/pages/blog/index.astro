@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import IconWrapper from '../../components/ui/IconWrapper.astro';
+
+// 假設這些數據將來自 CMS
+const blogPosts = [
+  {
+    title: 'vTaiwan 平台更新：新增專案追蹤功能',
+    date: '2025-03-20',
+    author: '張小明',
+    authorTitle: 'vTaiwan 平台管理員',
+    category: '平台公告',
+    excerpt: '為了讓公民更容易追蹤關注的議題，我們在平台上新增了專案追蹤功能，讓您可以接收專案的最新進展與會議通知。',
+    url: '/blog/project-tracking-feature',
+    image: '/assets/images/blog/project-tracking.jpg',
+    tags: ['平台更新', '使用指南']
+  },
+  {
+    title: '數位身分證諮詢會議摘要',
+    date: '2025-03-15',
+    author: '林大方',
+    authorTitle: '專案協調人',
+    category: '會議紀錄',
+    excerpt: '本次會議邀請了資安專家、法律學者與公民團體代表，討論數位身分證的隱私保護措施與資安風險評估。',
+    url: '/blog/digital-id-meeting-summary',
+    image: '/assets/images/blog/digital-id-meeting.jpg',
+    tags: ['數位身分證', '會議紀錄', '隱私保護']
+  },
+  {
+    title: '如何參與 vTaiwan 的政策討論',
+    date: '2025-03-10',
+    author: '王美麗',
+    authorTitle: '公民參與顧問',
+    category: '參與指南',
+    excerpt: '想參與公共政策討論但不知從何開始？本文將介紹如何在 vTaiwan 平台上有效參與政策形成過程，從提出議題到追蹤執行成果。',
+    url: '/blog/how-to-participate',
+    image: '/assets/images/blog/participation-guide.jpg',
+    tags: ['新手指南', '公民參與', '政策討論']
+  },
+  {
+    title: '開放政府資料的應用與挑戰',
+    date: '2025-03-05',
+    author: '陳志明',
+    authorTitle: '資料科學家',
+    category: '專題報導',
+    excerpt: '政府資料開放後，如何有效應用並解決實際問題？本文探討開放資料的應用案例與面臨的挑戰。',
+    url: '/blog/open-data-applications',
+    image: '/assets/images/blog/open-data.jpg',
+    tags: ['開放資料', '資料應用', '政府透明']
+  },
+  {
+    title: '青年就業政策工作坊成果',
+    date: '2025-02-28',
+    author: '李小華',
+    authorTitle: '專案協調人',
+    category: '會議紀錄',
+    excerpt: '青年就業政策工作坊集結了各界青年代表，討論就業困境與可能的政策解方，本文整理工作坊的主要討論與建議。',
+    url: '/blog/youth-employment-workshop-results',
+    image: '/assets/images/blog/youth-workshop.jpg',
+    tags: ['青年就業', '工作坊', '政策建議']
+  },
+  {
+    title: '環境資訊公開：國際經驗分享',
+    date: '2025-02-20',
+    author: '黃綠水',
+    authorTitle: '環境政策研究員',
+    category: '專題報導',
+    excerpt: '本文分享國際上環境資訊公開的成功案例，探討台灣可以借鑑的經驗與做法。',
+    url: '/blog/environmental-info-international',
+    image: '/assets/images/blog/environmental-info.jpg',
+    tags: ['環境資訊', '國際經驗', '透明治理']
+  }
+];
+
+// 分類列表
+const categories = [...new Set(blogPosts.map(post => post.category))];
+
+// 所有標籤
+const allTags = [...new Set(blogPosts.flatMap(post => post.tags))];
+---
+
+<BaseLayout title="部落格 - vTaiwan">
+  <!-- Hero Section -->
+  <section class="bg-black text-white py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">部落格</h1>
+      <p class="text-xl max-w-3xl">
+        探索 vTaiwan 的最新動態、專案進展、會議紀錄與公共政策分析。
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <div class="bg-gray-100 rounded-lg overflow-hidden">
+        <div class="md:flex">
+          <div class="md:w-1/2">
+            <img 
+              src={blogPosts[0].image} 
+              alt={blogPosts[0].title}
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="md:w-1/2 p-8">
+            <div class="flex items-center text-sm text-gray-500 mb-2">
+              <span>{blogPosts[0].date}</span>
+              <span class="mx-2">•</span>
+              <span>{blogPosts[0].category}</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">
+              <a href={blogPosts[0].url} class="hover:text-democratic-red transition">
+                {blogPosts[0].title}
+              </a>
+            </h2>
+            <p class="text-gray-700 mb-6">{blogPosts[0].excerpt}</p>
+            <div class="flex items-center mb-6">
+              <div class="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+              <div>
+                <div class="font-medium">{blogPosts[0].author}</div>
+                <div class="text-sm text-gray-500">{blogPosts[0].authorTitle}</div>
+              </div>
+            </div>
+            <a href={blogPosts[0].url} class="btn-primary rounded-md inline-block">
+              閱讀全文
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters and Posts -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <div class="md:flex gap-8">
+        <!-- Sidebar -->
+        <div class="md:w-1/4 mb-8 md:mb-0">
+          <div class="sticky top-20">
+            <!-- Search -->
+            <div class="mb-8">
+              <h3 class="font-bold mb-4">搜尋</h3>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <IconWrapper name="search" size={18} color="#A0A0A0" />
+                </div>
+                <input
+                  type="text"
+                  id="blog-search"
+                  placeholder="搜尋文章..."
+                  class="pl-10 border-gray-300 rounded-md shadow-sm focus:border-democratic-red focus:ring focus:ring-democratic-red/20 w-full"
+                />
+              </div>
+            </div>
+            
+            <!-- Categories -->
+            <div class="mb-8">
+              <h3 class="font-bold mb-4">分類</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="#" class="text-democratic-red font-medium flex items-center gap-2">
+                    <IconWrapper name="check" size={16} />
+                    <span>全部分類</span>
+                  </a>
+                </li>
+                {categories.map(category => (
+                  <li>
+                    <a href={`/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`} class="text-gray-700 hover:text-democratic-red transition flex items-center gap-2">
+                      <IconWrapper name="folder" size={16} />
+                      <span>{category}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <!-- Tags -->
+            <div>
+              <h3 class="font-bold mb-4">標籤</h3>
+              <div class="flex flex-wrap gap-2">
+                {allTags.map(tag => (
+                  <a href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`} class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm transition">
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Posts Grid -->
+        <div class="md:w-3/4">
+          <div class="grid md:grid-cols-2 gap-6">
+            {blogPosts.slice(1).map(post => (
+              <article class="card hover:border-wheat-yellow transition">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  class="w-full h-48 object-cover"
+                />
+                <div class="p-6">
+                  <div class="flex items-center text-sm text-gray-500 mb-2">
+                    <span>{post.date}</span>
+                    <span class="mx-2">•</span>
+                    <span>{post.category}</span>
+                  </div>
+                  <h3 class="font-bold text-xl mb-3">
+                    <a href={post.url} class="hover:text-democratic-red transition">
+                      {post.title}
+                    </a>
+                  </h3>
+                  <p class="text-gray-700 mb-4">{post.excerpt}</p>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="w-8 h-8 bg-gray-300 rounded-full mr-2"></div>
+                      <span class="text-sm">{post.author}</span>
+                    </div>
+                    <a href={post.url} class="text-democratic-red hover:text-democratic-red/80 transition flex items-center gap-1">
+                      <span>閱讀全文</span>
+                      <IconWrapper name="arrow-right" size={16} />
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          
+          <!-- Pagination -->
+          <div class="mt-12 flex justify-center">
+            <nav class="inline-flex">
+              <a href="#" class="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-l-md">
+                上一頁
+              </a>
+              <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                1
+              </a>
+              <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-democratic-red text-white">
+                2
+              </a>
+              <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                3
+              </a>
+              <a href="#" class="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 rounded-r-md">
+                下一頁
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-2xl font-bold mb-4">訂閱最新消息</h2>
+      <p class="text-lg mb-6 max-w-2xl mx-auto">
+        訂閱我們的電子報，獲取 vTaiwan 的最新動態、專案進展與會議通知。
+      </p>
+      <div class="max-w-md mx-auto">
+        <div class="flex">
+          <input
+            type="email"
+            placeholder="您的電子郵件"
+            class="flex-grow border-gray-300 rounded-l-md shadow-sm focus:border-democratic-red focus:ring focus:ring-democratic-red/20"
+          />
+          <button class="btn-primary rounded-r-md">
+            訂閱
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // 搜尋功能
+  const searchInput = document.getElementById('blog-search');
+  
+  if (searchInput) {
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const searchTerm = (searchInput as HTMLInputElement).value.trim();
+        if (searchTerm) {
+          window.location.href = `/blog/search?q=${encodeURIComponent(searchTerm)}`;
+        }
+      }
+    });
+  }
+</script>

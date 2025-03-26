@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'lucide-astro';
+import IconWrapper from '../../components/ui/IconWrapper.astro';
+
+// 假設這些數據將來自 CMS
+const projects = [
+  {
+    title: '數位身分證',
+    description: '討論數位身分證的隱私與安全議題，探討如何在便利性與資安之間取得平衡。',
+    status: 'active',
+    icon: 'id-card',
+    color: 'primary',
+    url: '/projects/digital-id',
+    category: '數位政策',
+    participantsCount: 256
+  },
+  {
+    title: '開放政府資料',
+    description: '推動政府資料開放與應用，建立資料標準與開放授權機制。',
+    status: 'active',
+    icon: 'database',
+    color: 'teal',
+    url: '/projects/open-data',
+    category: '開放政府',
+    participantsCount: 189
+  },
+  {
+    title: '遠距醫療法規',
+    description: '探討遠距醫療的法規與實施，解決偏鄉醫療資源不足問題。',
+    status: 'completed',
+    icon: 'stethoscope',
+    color: 'amber',
+    url: '/projects/telemedicine',
+    category: '健康醫療',
+    participantsCount: 142
+  },
+  {
+    title: '線上投票系統',
+    description: '研究安全可靠的線上投票系統，提升公民參與度與決策效率。',
+    status: 'active',
+    icon: 'vote',
+    color: 'primary',
+    url: '/projects/online-voting',
+    category: '數位民主',
+    participantsCount: 213
+  },
+  {
+    title: '共享經濟管理',
+    description: '討論共享經濟平台的監管與稅務問題，平衡創新與消費者保護。',
+    status: 'completed',
+    icon: 'share-2',
+    color: 'teal',
+    url: '/projects/sharing-economy',
+    category: '經濟政策',
+    participantsCount: 178
+  },
+  {
+    title: '數位學習資源',
+    description: '推動開放教育資源與數位學習平台，縮小教育資源差距。',
+    status: 'active',
+    icon: 'book-open',
+    color: 'amber',
+    url: '/projects/digital-learning',
+    category: '教育政策',
+    participantsCount: 165
+  },
+  {
+    title: '環境資訊公開',
+    description: '建立環境監測資訊公開機制，提升環境治理透明度。',
+    status: 'active',
+    icon: 'leaf',
+    color: 'teal',
+    url: '/projects/environmental-info',
+    category: '環境政策',
+    participantsCount: 132
+  },
+  {
+    title: '網路隱私保護',
+    description: '討論個人資料保護與網路隱私權的法規與實踐。',
+    status: 'completed',
+    icon: 'shield',
+    color: 'primary',
+    url: '/projects/privacy-protection',
+    category: '數位權利',
+    participantsCount: 201
+  },
+  {
+    title: '青年就業政策',
+    description: '探討青年就業困境與政策解方，促進世代公平。',
+    status: 'active',
+    icon: 'briefcase',
+    color: 'amber',
+    url: '/projects/youth-employment',
+    category: '勞動政策',
+    participantsCount: 187
+  }
+];
+
+// 分類列表
+const categories = [...new Set(projects.map(project => project.category))];
+
+// 狀態選項
+const statuses = [
+  { value: 'all', label: '全部' },
+  { value: 'active', label: '進行中' },
+  { value: 'completed', label: '已完成' }
+];
+---
+
+<BaseLayout title="專案列表 - vTaiwan">
+  <!-- Hero Section -->
+  <section class="bg-black text-white py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">專案列表</h1>
+      <p class="text-xl max-w-3xl">
+        vTaiwan 平台上的所有公共政策協作專案。每個專案都經過提案、討論、形成共識與政策建議的過程。
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters Section -->
+  <section class="py-6 border-b">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-wrap gap-4 items-center">
+        <div>
+          <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-1">狀態</label>
+          <select id="status-filter" class="border-gray-300 rounded-md shadow-sm focus:border-democratic-red focus:ring focus:ring-democratic-red/20">
+            {statuses.map(status => (
+              <option value={status.value}>{status.label}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label for="category-filter" class="block text-sm font-medium text-gray-700 mb-1">分類</label>
+          <select id="category-filter" class="border-gray-300 rounded-md shadow-sm focus:border-democratic-red focus:ring focus:ring-democratic-red/20">
+            <option value="all">全部分類</option>
+            {categories.map(category => (
+              <option value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div class="ml-auto">
+          <label for="search" class="block text-sm font-medium text-gray-700 mb-1">搜尋</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Icon name="search" size={18} color="#A0A0A0" />
+            </div>
+            <input
+              type="text"
+              id="search"
+              placeholder="搜尋專案..."
+              class="pl-10 border-gray-300 rounded-md shadow-sm focus:border-democratic-red focus:ring focus:ring-democratic-red/20 w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+        {projects.map(project => (
+          <a href={project.url} class="card hover:border-democratic-red transition" data-status={project.status} data-category={project.category}>
+            <div class="p-6">
+              <div class="flex items-start mb-4">
+                <div class={`w-12 h-12 rounded-full bg-${project.color === 'primary' ? 'democratic-red' : project.color === 'teal' ? 'jade-green' : 'wheat-yellow'}/10 flex items-center justify-center mr-4`}>
+                  <IconWrapper name={project.icon} type={project.color} size={24} />
+                </div>
+                <div>
+                  <h3 class="font-bold text-lg">{project.title}</h3>
+                  <div class="flex items-center mt-1">
+                    <span class={`inline-block w-2 h-2 rounded-full ${project.status === 'active' ? 'bg-jade-green' : 'bg-gray-400'} mr-2`}></span>
+                    <span class="text-sm text-gray-600">{project.status === 'active' ? '進行中' : '已完成'}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <p class="text-gray-700 mb-4">{project.description}</p>
+              
+              <div class="flex justify-between text-sm text-gray-500 mt-4 pt-4 border-t border-gray-100">
+                <span class="flex items-center gap-1">
+                  <IconWrapper name="tag" size={14} />
+                  {project.category}
+                </span>
+                <span class="flex items-center gap-1">
+                  <IconWrapper name="users" size={14} />
+                  {project.participantsCount} 人參與
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-2xl font-bold mb-4">想要提出新的專案？</h2>
+      <p class="text-lg mb-6 max-w-2xl mx-auto">
+        如果您有值得討論的公共政策議題，歡迎提出專案建議。
+      </p>
+      <a href="/propose" class="btn-primary rounded-md inline-block">
+        提出專案
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // 篩選功能
+  const statusFilter = document.getElementById('status-filter');
+  const categoryFilter = document.getElementById('category-filter');
+  const searchInput = document.getElementById('search');
+  const projectsGrid = document.getElementById('projects-grid');
+  const projectCards = document.querySelectorAll('#projects-grid > a');
+  
+  function filterProjects() {
+    const statusValue = statusFilter.value;
+    const categoryValue = categoryFilter.value;
+    const searchValue = searchInput.value.toLowerCase();
+    
+    projectCards.forEach(card => {
+      const status = card.getAttribute('data-status');
+      const category = card.getAttribute('data-category');
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      const description = card.querySelector('p').textContent.toLowerCase();
+      
+      const statusMatch = statusValue === 'all' || status === statusValue;
+      const categoryMatch = categoryValue === 'all' || category === categoryValue;
+      const searchMatch = title.includes(searchValue) || description.includes(searchValue);
+      
+      if (statusMatch && categoryMatch && searchMatch) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+  
+  statusFilter.addEventListener('change', filterProjects);
+  categoryFilter.addEventListener('change', filterProjects);
+  searchInput.addEventListener('input', filterProjects);
+</script>
