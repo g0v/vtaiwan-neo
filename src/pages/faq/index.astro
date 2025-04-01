@@ -1,0 +1,112 @@
+---
+// src/pages/faq/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="常見問答 | vTaiwan">
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl font-bold mb-8">常見問答 (FAQ)</h1>
+      
+      <section class="prose-lg mb-12">
+        <p class="mb-6">
+          以下是關於 vTaiwan 平台的常見問題與解答。如果您有其他問題，歡迎聯繫我們。
+        </p>
+        
+        <div class="space-y-6">
+          <!-- FAQ 項目 -->
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition p-6">
+            <h3 class="text-xl font-bold mb-2 text-democratic-red">什麼是 vTaiwan？</h3>
+            <p class="text-gray-700">
+              vTaiwan 是一個結合線上與線下的公共政策討論平台，旨在透過公民參與和數位工具，
+              促進政府、專家與民眾之間的理性對話，共同形塑更好的政策方案。
+            </p>
+          </div>
+          
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition p-6">
+            <h3 class="text-xl font-bold mb-2 text-democratic-red">誰可以參與 vTaiwan？</h3>
+            <p class="text-gray-700">
+              任何對公共政策有興趣的公民都可以參與 vTaiwan 的討論。無論您是一般民眾、專家學者、企業代表或政府官員，
+              都歡迎加入我們的平台，分享您的觀點和建議。
+            </p>
+          </div>
+          
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition p-6">
+            <h3 class="text-xl font-bold mb-2 text-democratic-red">如何在 vTaiwan 上提出議題？</h3>
+            <p class="text-gray-700">
+              您可以透過我們的線上平台提出政策議題。點擊網站上的「提案」按鈕，填寫相關資訊，包括議題名稱、
+              背景說明、預期目標等。提案後，我們的團隊會進行初步審核，確認議題的適切性和完整性。
+            </p>
+          </div>
+          
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition p-6">
+            <h3 class="text-xl font-bold mb-2 text-democratic-red">vTaiwan 的討論流程是什麼？</h3>
+            <p class="text-gray-700">
+              vTaiwan 的討論流程通常包括四個階段：
+            </p>
+            <ol class="list-decimal pl-6 mt-2 space-y-1">
+              <li>議題收集：收集各方對特定政策議題的意見和建議</li>
+              <li>意見徵集：透過線上平台廣泛徵集公眾意見</li>
+              <li>審議討論：舉辦線上或實體會議，深入討論議題</li>
+              <li>政策形成：整合各方意見，形成具體政策建議</li>
+            </ol>
+          </div>
+          
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition p-6">
+            <h3 class="text-xl font-bold mb-2 text-democratic-red">vTaiwan 的討論結果如何被採納？</h3>
+            <p class="text-gray-700">
+              vTaiwan 的討論結果會被整理成政策建議報告，提交給相關政府部門參考。
+              過去已有多項透過 vTaiwan 討論形成的政策建議被政府採納，並轉化為實際的法規或政策。
+              然而，最終的政策決定權仍在政府手中，vTaiwan 扮演的是促進對話和形成共識的平台角色。
+            </p>
+          </div>
+          
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition p-6">
+            <h3 class="text-xl font-bold mb-2 text-democratic-red">如何追蹤議題的進展？</h3>
+            <p class="text-gray-700">
+              您可以在 vTaiwan 網站上查看各議題的最新進展和討論結果。
+              我們會定期更新議題狀態，包括討論階段、參與人數、關鍵意見等資訊。
+              您也可以訂閱我們的電子報，獲取最新的議題進展通知。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 聯絡我們區塊 -->
+      <section class="border-t pt-12 mt-12">
+        <h2 class="text-3xl font-bold mb-6">還有其他問題？</h2>
+        <p class="mb-8">如果您有其他問題或需要協助，歡迎透過以下方式聯繫我們：</p>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-100 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold mb-4">電子郵件</h3>
+            <p class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-democratic-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <a href="mailto:contact@vtaiwan.tw" class="hover:text-democratic-red transition">contact@vtaiwan.tw</a>
+            </p>
+          </div>
+          
+          <div class="bg-gray-100 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold mb-4">社群媒體</h3>
+            <div class="space-y-2">
+              <p class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-democratic-red" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+                <a href="https://twitter.com/vtaiwan" target="_blank" class="hover:text-democratic-red transition">@vtaiwan</a>
+              </p>
+              <p class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-democratic-red" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                </svg>
+                <a href="https://facebook.com/vtaiwan.tw" target="_blank" class="hover:text-democratic-red transition">vTaiwan</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
