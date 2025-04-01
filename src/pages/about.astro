@@ -1,0 +1,161 @@
+---
+// src/pages/about.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="關於我們 | vTaiwan">
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl font-bold mb-8">關於 vTaiwan</h1>
+      
+      <section class="prose-lg mb-12">
+        <p class="mb-6">
+          vTaiwan 是一個結合線上與線下的公共政策討論平台，旨在透過公民參與和數位工具，
+          促進政府、專家與民眾之間的理性對話，共同形塑更好的政策方案。
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-gray-100 p-6 rounded-lg">
+            <h2 class="text-2xl font-semibold mb-4">我們的使命</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>建立透明開放的決策流程</li>
+              <li>促進多元利害關係人的對話</li>
+              <li>運用數位工具提升審議品質</li>
+              <li>推動可驗證的政策實驗</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gray-100 p-6 rounded-lg">
+            <h2 class="text-2xl font-semibold mb-4">核心價值</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>開放透明</li>
+              <li>公民參與</li>
+              <li>理性對話</li>
+              <li>迭代精進</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-t pt-12">
+        <h2 class="text-3xl font-bold mb-6">參與方式</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="text-center p-4">
+            <div class="text-democratic-red text-4xl mb-4">①</div>
+            <h3 class="text-xl font-semibold mb-2">線上提案</h3>
+            <p>在討論區提出政策議題或改進建議</p>
+          </div>
+          <div class="text-center p-4">
+            <div class="text-democratic-red text-4xl mb-4">②</div>
+            <h3 class="text-xl font-semibold mb-2">參與討論</h3>
+            <p>加入線上會議或留言參與議題討論</p>
+          </div>
+          <div class="text-center p-4">
+            <div class="text-democratic-red text-4xl mb-4">③</div>
+            <h3 class="text-xl font-semibold mb-2">追蹤成果</h3>
+            <p>關注政策建議的後續發展與執行進度</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 媒體報導區塊 -->
+      <section class="border-t pt-12 mt-12">
+        <h2 class="text-3xl font-bold mb-6">媒體報導</h2>
+        <p class="mb-8">vTaiwan 的創新模式與成果獲得了國內外媒體的廣泛關注與報導。</p>
+        
+        <div class="space-y-8">
+          <!-- 媒體報導項目 1 -->
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+            <div class="md:flex">
+              <div class="md:w-1/4 bg-gray-100 flex items-center justify-center p-6">
+                <span class="text-gray-500 font-medium">2025.03.15</span>
+              </div>
+              <div class="md:w-3/4 p-6">
+                <div class="flex items-center mb-2">
+                  <span class="text-sm font-medium bg-democratic-red/10 text-democratic-red px-2 py-1 rounded mr-2">天下雜誌</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                  <a href="#" class="hover:text-democratic-red transition">
+                    公民參與新典範：vTaiwan 如何改變台灣的政策制定流程
+                  </a>
+                </h3>
+                <p class="text-gray-600 mb-4">
+                  本文深入探討 vTaiwan 平台如何透過數位工具與開放討論，成功促成多項政策的形成與調整，為台灣的公民參與樹立新標竿。
+                </p>
+                <a href="#" class="text-democratic-red hover:text-democratic-red/80 inline-flex items-center">
+                  閱讀全文
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 媒體報導項目 2 -->
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+            <div class="md:flex">
+              <div class="md:w-1/4 bg-gray-100 flex items-center justify-center p-6">
+                <span class="text-gray-500 font-medium">2025.02.20</span>
+              </div>
+              <div class="md:w-3/4 p-6">
+                <div class="flex items-center mb-2">
+                  <span class="text-sm font-medium bg-jade-green/10 text-jade-green px-2 py-1 rounded mr-2">公視新聞</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                  <a href="#" class="hover:text-democratic-red transition">
+                    數位民主的實踐：vTaiwan 平台推動遠距醫療法規調適
+                  </a>
+                </h3>
+                <p class="text-gray-600 mb-4">
+                  vTaiwan 平台近期成功協助政府與民間就遠距醫療法規進行對話，透過線上討論與實體會議，形成具體政策建議，獲得衛福部採納。
+                </p>
+                <a href="#" class="text-democratic-red hover:text-democratic-red/80 inline-flex items-center">
+                  閱讀全文
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 媒體報導項目 3 -->
+          <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+            <div class="md:flex">
+              <div class="md:w-1/4 bg-gray-100 flex items-center justify-center p-6">
+                <span class="text-gray-500 font-medium">2025.01.10</span>
+              </div>
+              <div class="md:w-3/4 p-6">
+                <div class="flex items-center mb-2">
+                  <span class="text-sm font-medium bg-wheat-yellow/10 text-amber-700 px-2 py-1 rounded mr-2">The Guardian</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">
+                  <a href="#" class="hover:text-democratic-red transition">
+                    Taiwan's vTaiwan: A Global Model for Digital Democracy
+                  </a>
+                </h3>
+                <p class="text-gray-600 mb-4">
+                  Taiwan's vTaiwan platform has gained international recognition as an innovative approach to policy-making, combining online deliberation with offline consensus-building.
+                </p>
+                <a href="#" class="text-democratic-red hover:text-democratic-red/80 inline-flex items-center">
+                  Read More
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 查看更多按鈕 -->
+        <div class="text-center mt-8">
+          <a href="/media" class="btn-outline inline-block">
+            查看更多媒體報導
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
