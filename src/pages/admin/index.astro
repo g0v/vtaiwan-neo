@@ -13,6 +13,15 @@
       body {
         font-family: 'Noto Serif TC', serif;
       }
+      .login-container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        background-color: #fff;
+        text-align: center;
+      }
       .login-btn {
         background-color: #D80000;
         color: white;
@@ -20,37 +29,31 @@
         padding: 10px 20px;
         border-radius: 4px;
         cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        width: 100%;
       }
       .login-btn:hover {
         background-color: #b00000;
       }
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+      }
     </style>
   </head>
   <body>
-    <!-- 將加載 Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
+    <div class="login-container">
+      <h1>vTaiwan 內容管理系統</h1>
+      <p>請點擊下方按鈕登入管理系統</p>
+      <a href="/admin/" class="login-btn">登入系統</a>
+    </div>
+
     <script>
-      // 自定義預覽樣式
-      CMS.registerPreviewStyle("/assets/css/preview.css");
-      
-      // 自定義顏色選擇器
-      const colorControl = createClass({
-        render: function() {
-          const {value, onChange} = this.props;
-          return h('div', {}, [
-            h('select', {
-              value: value || 'primary',
-              onChange: e => onChange(e.target.value)
-            }, [
-              h('option', {value: 'primary'}, '民主紅 (Primary)'),
-              h('option', {value: 'teal'}, '翠玉青 (Teal)'),
-              h('option', {value: 'amber'}, '稻穗黃 (Amber)')
-            ])
-          ]);
-        }
+      // 直接重定向到 public/admin/index.html
+      document.addEventListener('DOMContentLoaded', function() {
+        window.location.href = '/admin/';
       });
-      
-      CMS.registerWidget('color-picker', colorControl);
     </script>
   </body>
 </html>

@@ -1,16 +1,13 @@
+# 本地開發模式使用簡單後端
 backend:
-  name: git-gateway
-  branch: main # 或您的主分支名稱
-
-# 當使用 Decap CMS 在本地開發時使用
-local_backend: true
+  name: test-repo
 
 # 媒體文件存儲位置
 media_folder: "public/assets/images/uploads"
 public_folder: "/assets/images/uploads"
 
-# 網站 URL，用於 OAuth
-site_url: https://vtaiwan.org # 替換為您的實際網站 URL
+# 網站 URL
+site_url: http://localhost:4323
 
 # 編輯器設置
 editor:

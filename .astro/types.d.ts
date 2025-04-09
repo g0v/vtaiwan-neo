@@ -184,7 +184,31 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		
+		"blog": {
+"測試文章.md": {
+	id: "測試文章.md";
+  slug: "測試文章";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+};
+"faq": {
+};
+"meetups": {
+"past-meetup-example.md": {
+	id: "past-meetup-example.md";
+  slug: "past-meetup-example";
+  body: string;
+  collection: "meetups";
+  data: InferEntrySchema<"meetups">
+} & { render(): Render[".md"] };
+};
+"pages": {
+};
+"projects": {
+};
+
 	};
 
 	type DataEntryMap = {

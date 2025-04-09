@@ -1,83 +1,32 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Icon } from 'lucide-astro';
 import IconWrapper from '../../components/ui/IconWrapper.astro';
+import { getCollection } from 'astro:content';
 
-// 假設這些數據將來自 CMS
-const upcomingMeetups = [
-  {
-    title: '數位身分證線上諮詢會議',
-    date: '2025-04-15',
-    time: '19:00-21:00',
-    location: '線上會議',
-    description: '討論數位身分證的隱私保護機制與資安議題，邀請資安專家、法律學者與公民團體代表參與。',
-    url: '/meetups/digital-id-consultation',
-    project: '數位身分證',
-    projectUrl: '/projects/digital-id',
-    registrationUrl: '#'
-  },
-  {
-    title: '開放政府資料工作坊',
-    date: '2025-04-22',
-    time: '14:00-17:00',
-    location: '台北市社會創新實驗中心',
-    description: '實作工作坊，教導參與者如何使用政府開放資料，並討論資料標準與開放授權機制。',
-    url: '/meetups/open-data-workshop',
-    project: '開放政府資料',
-    projectUrl: '/projects/open-data',
-    registrationUrl: '#'
-  },
-  {
-    title: '線上投票系統安全性討論',
-    date: '2025-05-05',
-    time: '19:30-21:30',
-    location: '線上會議',
-    description: '探討線上投票系統的安全性與可靠性，邀請資安專家與選舉專家分享經驗與建議。',
-    url: '/meetups/online-voting-security',
-    project: '線上投票系統',
-    projectUrl: '/projects/online-voting',
-    registrationUrl: '#'
-  }
-];
+// 從內容集合中讀取會議資料
+const allMeetups = await getCollection('meetups').catch(() => []);
 
-const pastMeetups = [
-  {
-    title: '數位學習資源共享平台討論會',
-    date: '2025-03-18',
-    time: '14:00-16:00',
-    location: '國家圖書館',
-    description: '討論如何建立開放教育資源與數位學習平台，縮小教育資源差距。',
-    url: '/meetups/digital-learning-platform',
-    project: '數位學習資源',
-    projectUrl: '/projects/digital-learning',
-    recordingUrl: '#',
-    summaryUrl: '#'
-  },
-  {
-    title: '環境資訊公開機制座談會',
-    date: '2025-03-10',
-    time: '10:00-12:00',
-    location: '環保署大禮堂',
-    description: '討論環境監測資訊公開機制，提升環境治理透明度。',
-    url: '/meetups/environmental-info-disclosure',
-    project: '環境資訊公開',
-    projectUrl: '/projects/environmental-info',
-    recordingUrl: '#',
-    summaryUrl: '#'
-  },
-  {
-    title: '青年就業政策工作坊',
-    date: '2025-02-25',
-    time: '13:30-16:30',
-    location: '青創基地',
-    description: '探討青年就業困境與政策解方，促進世代公平。',
-    url: '/meetups/youth-employment-workshop',
-    project: '青年就業政策',
-    projectUrl: '/projects/youth-employment',
-    recordingUrl: '#',
-    summaryUrl: '#'
-  }
-];
+// 將會議分為即將舉行和過去的會議
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+// 按日期排序會議
+const sortedMeetups = allMeetups && allMeetups.length ? [...allMeetups].sort((a, b) => {
+  const dateA = new Date(a.data.date);
+  const dateB = new Date(b.data.date);
+  return dateA.getTime() - dateB.getTime();
+}) : [];
+
+// 分類會議
+const upcomingMeetups = sortedMeetups.filter(meetup => {
+  const meetupDate = new Date(meetup.data.date);
+  return meetupDate >= today;
+});
+
+const pastMeetups = sortedMeetups.filter(meetup => {
+  const meetupDate = new Date(meetup.data.date);
+  return meetupDate < today;
+}).reverse(); // 過去的會議按日期降序排列，最近的在前
 ---
 
 <BaseLayout title="會議 - vTaiwan">
@@ -99,48 +48,56 @@ const pastMeetups = [
       </h2>
       
       <div class="space-y-6">
-        {upcomingMeetups.map(meetup => (
-          <div class="card p-6 border-l-4 border-l-jade-green">
-            <div class="md:flex justify-between">
-              <div class="md:w-2/3">
-                <h3 class="text-xl font-bold mb-2">
-                  <a href={meetup.url} class="hover:text-jade-green transition">{meetup.title}</a>
-                </h3>
-                
-                <div class="flex flex-wrap gap-4 text-sm text-gray-700 mb-4">
-                  <div class="flex items-center gap-1">
-                    <IconWrapper name="calendar" type="teal" size={16} />
-                    <span>{meetup.date}</span>
+        {upcomingMeetups.length === 0 ? (
+          <div class="text-center py-12">
+            <p class="text-gray-500 text-lg">目前沒有即將舉行的會議</p>
+          </div>
+        ) : (
+          upcomingMeetups.map(meetup => (
+            <div class="card p-6 border-l-4 border-l-jade-green">
+              <div class="md:flex justify-between">
+                <div class="md:w-2/3">
+                  <h3 class="text-xl font-bold mb-2">
+                    <a href={`/meetups/${meetup.slug}`} class="hover:text-jade-green transition">{meetup.data.title}</a>
+                  </h3>
+                  
+                  <div class="flex flex-wrap gap-4 text-sm text-gray-700 mb-4">
+                    <div class="flex items-center gap-1">
+                      <IconWrapper name="calendar" type="teal" size={16} />
+                      <span>{new Date(meetup.data.date).toLocaleDateString('zh-TW')}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <IconWrapper name="clock" type="teal" size={16} />
+                      <span>{meetup.data.time}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <IconWrapper name="map-pin" type="teal" size={16} />
+                      <span>{meetup.data.location}</span>
+                    </div>
                   </div>
-                  <div class="flex items-center gap-1">
-                    <IconWrapper name="clock" type="teal" size={16} />
-                    <span>{meetup.time}</span>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <IconWrapper name="map-pin" type="teal" size={16} />
-                    <span>{meetup.location}</span>
+                  
+                  <p class="text-gray-700 mb-4">{meetup.data.description}</p>
+                  
+                  <div class="flex items-center gap-1 text-sm">
+                    <span>相關專案：</span>
+                    <a href={meetup.data.projectUrl} class="text-democratic-red hover:text-democratic-red/80 transition">{meetup.data.project}</a>
                   </div>
                 </div>
                 
-                <p class="text-gray-700 mb-4">{meetup.description}</p>
-                
-                <div class="flex items-center gap-1 text-sm">
-                  <span>相關專案：</span>
-                  <a href={meetup.projectUrl} class="text-democratic-red hover:text-democratic-red/80 transition">{meetup.project}</a>
+                <div class="md:w-1/3 md:text-right mt-4 md:mt-0">
+                  {meetup.data.registrationUrl && (
+                    <a href={meetup.data.registrationUrl} class="btn-secondary rounded-md inline-block">
+                      立即報名
+                    </a>
+                  )}
+                  <a href={`/meetups/${meetup.slug}`} class="btn-outline rounded-md inline-block ml-2">
+                    詳細資訊
+                  </a>
                 </div>
-              </div>
-              
-              <div class="md:w-1/3 md:text-right mt-4 md:mt-0">
-                <a href={meetup.registrationUrl} class="btn-secondary rounded-md inline-block">
-                  立即報名
-                </a>
-                <a href={meetup.url} class="btn-outline rounded-md inline-block ml-2">
-                  詳細資訊
-                </a>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   </section>
@@ -173,50 +130,65 @@ const pastMeetups = [
       </h2>
       
       <div class="space-y-6">
-        {pastMeetups.map(meetup => (
-          <div class="card p-6 border-l-4 border-l-gray-300">
-            <div class="md:flex justify-between">
-              <div class="md:w-2/3">
-                <h3 class="text-xl font-bold mb-2">
-                  <a href={meetup.url} class="hover:text-jade-green transition">{meetup.title}</a>
-                </h3>
-                
-                <div class="flex flex-wrap gap-4 text-sm text-gray-700 mb-4">
-                  <div class="flex items-center gap-1">
-                    <IconWrapper name="calendar" size={16} />
-                    <span>{meetup.date}</span>
+        {pastMeetups.length === 0 ? (
+          <div class="text-center py-12">
+            <p class="text-gray-500 text-lg">目前沒有過去的會議記錄</p>
+          </div>
+        ) : (
+          pastMeetups.map(meetup => (
+            <div class="card p-6 border-l-4 border-l-gray-300">
+              <div class="md:flex justify-between">
+                <div class="md:w-2/3">
+                  <h3 class="text-xl font-bold mb-2">
+                    <a href={`/meetups/${meetup.slug}`} class="hover:text-jade-green transition">{meetup.data.title}</a>
+                  </h3>
+                  
+                  <div class="flex flex-wrap gap-4 text-sm text-gray-700 mb-4">
+                    <div class="flex items-center gap-1">
+                      <IconWrapper name="calendar" size={16} />
+                      <span>{new Date(meetup.data.date).toLocaleDateString('zh-TW')}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <IconWrapper name="clock" size={16} />
+                      <span>{meetup.data.time}</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <IconWrapper name="map-pin" size={16} />
+                      <span>{meetup.data.location}</span>
+                    </div>
                   </div>
-                  <div class="flex items-center gap-1">
-                    <IconWrapper name="clock" size={16} />
-                    <span>{meetup.time}</span>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <IconWrapper name="map-pin" size={16} />
-                    <span>{meetup.location}</span>
+                  
+                  <p class="text-gray-700 mb-4">{meetup.data.description}</p>
+                  
+                  <div class="flex items-center gap-1 text-sm">
+                    <span>相關專案：</span>
+                    <a href={meetup.data.projectUrl} class="text-democratic-red hover:text-democratic-red/80 transition">{meetup.data.project}</a>
                   </div>
                 </div>
                 
-                <p class="text-gray-700 mb-4">{meetup.description}</p>
-                
-                <div class="flex items-center gap-1 text-sm">
-                  <span>相關專案：</span>
-                  <a href={meetup.projectUrl} class="text-democratic-red hover:text-democratic-red/80 transition">{meetup.project}</a>
+                <div class="md:w-1/3 md:text-right mt-4 md:mt-0">
+                  {meetup.data.recordingUrl && (
+                    <a href={meetup.data.recordingUrl} class="btn-outline rounded-md inline-block">
+                      <span class="flex items-center gap-1">
+                        <IconWrapper name="video" size={16} />
+                        <span>觀看錄影</span>
+                      </span>
+                    </a>
+                  )}
+                  
+                  {meetup.data.summaryUrl && (
+                    <a href={meetup.data.summaryUrl} class="btn-outline rounded-md inline-block ml-2">
+                      <span class="flex items-center gap-1">
+                        <IconWrapper name="file-text" size={16} />
+                        <span>會議紀錄</span>
+                      </span>
+                    </a>
+                  )}
                 </div>
-              </div>
-              
-              <div class="md:w-1/3 md:text-right mt-4 md:mt-0 space-y-2">
-                <a href={meetup.recordingUrl} class="text-jade-green hover:text-jade-green/80 transition flex items-center gap-1 justify-end">
-                  <IconWrapper name="video" type="teal" size={16} />
-                  <span>觀看錄影</span>
-                </a>
-                <a href={meetup.summaryUrl} class="text-jade-green hover:text-jade-green/80 transition flex items-center gap-1 justify-end">
-                  <IconWrapper name="file-text" type="teal" size={16} />
-                  <span>會議紀錄</span>
-                </a>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
       
       <div class="mt-8 text-center">

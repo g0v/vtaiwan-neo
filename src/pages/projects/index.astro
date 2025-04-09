@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Icon } from 'lucide-astro';
 import IconWrapper from '../../components/ui/IconWrapper.astro';
 
 // 假設這些數據將來自 CMS
@@ -146,7 +145,7 @@ const statuses = [
           <label for="search" class="block text-sm font-medium text-gray-700 mb-1">搜尋</label>
           <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Icon name="search" size={18} color="#A0A0A0" />
+              <IconWrapper name="search" size={18} />
             </div>
             <input
               type="text"

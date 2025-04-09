@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IconWrapper from '../../components/ui/IconWrapper.astro';
+import { getCollection } from 'astro:content';
+
+// 生成所有部落格文章的靜態路徑
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// 獲取當前文章
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// 格式化日期
+const formattedDate = new Date(entry.data.date).toLocaleDateString('zh-TW', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<BaseLayout title={`${entry.data.title} - vTaiwan 部落格`}>
+  <div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+      <!-- 返回按鈕 -->
+      <a href="/blog" class="inline-flex items-center gap-1 text-democratic-red hover:underline mb-8">
+        <IconWrapper name="arrow-left" size={16} />
+        <span>返回部落格</span>
+      </a>
+      
+      <!-- 文章頭部 -->
+      <header class="mb-8">
+        <div class="flex items-center gap-3 text-sm text-gray-600 mb-3">
+          <span>{formattedDate}</span>
+          <span>•</span>
+          <a href={`/blog/category/${entry.data.category.toLowerCase().replace(/\s+/g, '-')}`} class="text-democratic-red hover:underline">
+            {entry.data.category}
+          </a>
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">{entry.data.title}</h1>
+        
+        <div class="flex items-center gap-2 mb-6">
+          <span class="font-medium">{entry.data.author}</span>
+          {entry.data.authorTitle && (
+            <span class="text-gray-600">({entry.data.authorTitle})</span>
+          )}
+        </div>
+        
+        {entry.data.image && (
+          <div class="mb-8">
+            <img 
+              src={entry.data.image} 
+              alt={entry.data.title} 
+              class="rounded-lg w-full max-h-96 object-cover"
+            />
+          </div>
+        )}
+        
+        <div class="flex flex-wrap gap-2 mb-8">
+          {(entry.data.tags || []).map(tag => (
+            <a href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`} class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm transition">
+              {tag}
+            </a>
+          ))}
+        </div>
+      </header>
+      
+      <!-- 文章內容 -->
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+      
+      <!-- 分享按鈕 -->
+      <div class="mt-12 pt-6 border-t border-gray-200">
+        <h3 class="font-bold mb-4">分享這篇文章</h3>
+        <div class="flex gap-3">
+          <button class="bg-[#1877F2] text-white p-2 rounded-full hover:opacity-90 transition">
+            <IconWrapper name="facebook" size={20} />
+          </button>
+          <button class="bg-[#1DA1F2] text-white p-2 rounded-full hover:opacity-90 transition">
+            <IconWrapper name="twitter" size={20} />
+          </button>
+          <button class="bg-[#0A66C2] text-white p-2 rounded-full hover:opacity-90 transition">
+            <IconWrapper name="linkedin" size={20} />
+          </button>
+          <button class="bg-gray-200 text-gray-700 p-2 rounded-full hover:bg-gray-300 transition">
+            <IconWrapper name="link" size={20} />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // 分享功能
+  document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLElement;
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent(document.title);
+      
+      let shareUrl = '';
+      
+      if (target.querySelector('[name="facebook"]')) {
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+      } else if (target.querySelector('[name="twitter"]')) {
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+      } else if (target.querySelector('[name="linkedin"]')) {
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+      } else if (target.querySelector('[name="link"]')) {
+        navigator.clipboard.writeText(window.location.href);
+        alert('連結已複製到剪貼簿');
+        return;
+      }
+      
+      if (shareUrl) {
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+      }
+    });
+  });
+</script>
