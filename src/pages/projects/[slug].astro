@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Icon } from 'lucide-astro';
 import IconWrapper from '../../components/ui/IconWrapper.astro';
 
 export function getStaticPaths() {
@@ -178,9 +177,9 @@ function getFileIcon(type) {
     <div class="container mx-auto px-4">
       <div class="flex items-center gap-2 text-gray-300 mb-4">
         <a href="/" class="hover:text-white transition">首頁</a>
-        <Icon name="chevron-right" size={16} />
+        <IconWrapper name="chevron-right" size={16} />
         <a href="/projects" class="hover:text-white transition">專案</a>
-        <Icon name="chevron-right" size={16} />
+        <IconWrapper name="chevron-right" size={16} />
         <span>{project.title}</span>
       </div>
       
@@ -372,7 +371,7 @@ function getFileIcon(type) {
               <div class="mt-4">
                 <a href="/meetups" class="text-jade-green hover:text-jade-green/80 transition flex items-center gap-1 justify-end">
                   <span>查看所有會議</span>
-                  <Icon name="arrow-right" size={16} color="#008888" />
+                  <IconWrapper name="arrow-right" size={16} color="#008888" />
                 </a>
               </div>
             </div>
@@ -393,7 +392,7 @@ function getFileIcon(type) {
               <div class="mt-4">
                 <a href="/blog" class="text-wheat-yellow hover:text-wheat-yellow/80 transition flex items-center gap-1 justify-end">
                   <span>查看所有文章</span>
-                  <Icon name="arrow-right" size={16} color="#DB7700" />
+                  <IconWrapper name="arrow-right" size={16} color="#DB7700" />
                 </a>
               </div>
             </div>

@@ -1,0 +1,119 @@
+backend:
+  name: git-gateway
+  branch: main # 或您的主分支名稱
+
+# 本地開發設置
+local_backend: true
+
+# 媒體文件存儲位置
+media_folder: "public/assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+# 網站 URL，用於 OAuth
+site_url: http://localhost:4321 # 本地開發 URL
+
+# 編輯器設置
+editor:
+  preview: true
+
+# 內容集合
+collections:
+  # 專案集合
+  - name: "projects"
+    label: "專案"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "標題", name: "title", widget: "string" }
+      - { label: "描述", name: "description", widget: "string" }
+      - { label: "完整描述", name: "fullDescription", widget: "markdown" }
+      - { label: "狀態", name: "status", widget: "select", options: ["active", "completed"] }
+      - { label: "開始日期", name: "startDate", widget: "date", format: "YYYY-MM-DD" }
+      - { label: "圖標", name: "icon", widget: "string" }
+      - { label: "顏色", name: "color", widget: "select", options: ["primary", "teal", "amber"] }
+      - { label: "分類", name: "category", widget: "string" }
+      - { label: "參與人數", name: "participantsCount", widget: "number", default: 0 }
+      - label: "專案階段"
+        name: "stages"
+        widget: "list"
+        fields:
+          - { label: "階段名稱", name: "name", widget: "string" }
+          - { label: "狀態", name: "status", widget: "select", options: ["completed", "active", "upcoming"] }
+          - { label: "日期範圍", name: "date", widget: "string" }
+          - { label: "描述", name: "description", widget: "string" }
+      - label: "團隊成員"
+        name: "team"
+        widget: "list"
+        fields:
+          - { label: "姓名", name: "name", widget: "string" }
+          - { label: "角色", name: "role", widget: "string" }
+          - { label: "組織", name: "organization", widget: "string" }
+          - { label: "頭像", name: "avatar", widget: "image" }
+      - label: "資源"
+        name: "resources"
+        widget: "list"
+        fields:
+          - { label: "標題", name: "title", widget: "string" }
+          - { label: "類型", name: "type", widget: "select", options: ["pdf", "doc", "link"] }
+          - { label: "URL", name: "url", widget: "string" }
+
+  # 會議集合
+  - name: "meetups"
+    label: "會議"
+    folder: "src/content/meetups"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "標題", name: "title", widget: "string" }
+      - { label: "日期", name: "date", widget: "date", format: "YYYY-MM-DD" }
+      - { label: "時間", name: "time", widget: "string" }
+      - { label: "地點", name: "location", widget: "string" }
+      - { label: "描述", name: "description", widget: "markdown" }
+      - { label: "相關專案", name: "project", widget: "string" }
+      - { label: "專案 URL", name: "projectUrl", widget: "string" }
+      - { label: "報名 URL", name: "registrationUrl", widget: "string", required: false }
+      - { label: "錄影 URL", name: "recordingUrl", widget: "string", required: false }
+      - { label: "會議紀錄 URL", name: "summaryUrl", widget: "string", required: false }
+      - { label: "狀態", name: "status", widget: "select", options: ["upcoming", "past"] }
+
+  # 部落格集合
+  - name: "blog"
+    label: "部落格"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "標題", name: "title", widget: "string" }
+      - { label: "發布日期", name: "date", widget: "date", format: "YYYY-MM-DD" }
+      - { label: "作者", name: "author", widget: "string" }
+      - { label: "作者職稱", name: "authorTitle", widget: "string" }
+      - { label: "分類", name: "category", widget: "string" }
+      - { label: "摘要", name: "excerpt", widget: "text" }
+      - { label: "封面圖片", name: "image", widget: "image" }
+      - { label: "標籤", name: "tags", widget: "list" }
+      - { label: "內容", name: "body", widget: "markdown" }
+
+  # 常見問題集合
+  - name: "faq"
+    label: "常見問題"
+    folder: "src/content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "問題", name: "question", widget: "string" }
+      - { label: "回答", name: "answer", widget: "markdown" }
+      - { label: "分類", name: "category", widget: "string" }
+      - { label: "排序", name: "order", widget: "number", default: 0 }
+
+  # 頁面集合
+  - name: "pages"
+    label: "頁面"
+    folder: "src/content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "標題", name: "title", widget: "string" }
+      - { label: "描述", name: "description", widget: "string" }
+      - { label: "內容", name: "body", widget: "markdown" }
+      - { label: "排序", name: "order", widget: "number", default: 0 }

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vTaiwan CMS 登入</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap">
+    <style>
+      body {
+        font-family: 'Noto Serif TC', serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .login-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        background-color: #fff;
+        text-align: center;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+      .login-btn {
+        background-color: #D80000;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        font-weight: 500;
+      }
+      .login-btn:hover {
+        background-color: #b00000;
+      }
+      .back-link {
+        margin-top: 20px;
+        display: block;
+        color: #666;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+      .error-message {
+        color: #D80000;
+        margin-top: 10px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>vTaiwan 內容管理系統</h1>
+      <div class="form-group">
+        <label for="email">電子郵件</label>
+        <input type="email" id="email" value="terry.f.wang@gmail.com" placeholder="請輸入您的電子郵件">
+      </div>
+      <div class="form-group">
+        <label for="password">密碼</label>
+        <input type="password" id="password" value="test1234" placeholder="請輸入您的密碼">
+      </div>
+      <button id="login-btn" class="login-btn">登入系統</button>
+      <div id="error-message" class="error-message">登入失敗，請檢查您的帳號密碼</div>
+      <a href="/" class="back-link">返回首頁</a>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('login-btn').addEventListener('click', function() {
+          // 獲取輸入的帳號密碼
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          
+          // 檢查是否為測試帳號
+          if (email === 'terry.f.wang@gmail.com' && password === 'test1234') {
+            // 登入成功，直接跳轉到 admin 頁面
+            localStorage.setItem('cms_user', JSON.stringify({
+              email: email,
+              name: 'Terry Wang',
+              loggedIn: true
+            }));
+            
+            // 跳轉到 admin 頁面
+            window.location.href = '/admin/';
+          } else {
+            // 顯示錯誤訊息
+            document.getElementById('error-message').style.display = 'block';
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
