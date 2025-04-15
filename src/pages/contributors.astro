@@ -6,14 +6,18 @@ import { contributors } from '../data/contributors.js';
 ---
 
 <BaseLayout title="貢獻者 | vTaiwan">
-  <main class="container mx-auto px-4 py-12">
-    <div class="max-w-5xl mx-auto">
-      <h1 class="text-4xl font-bold mb-8 text-center">貢獻者</h1>
-      
-      <p class="text-xl text-center mb-12 max-w-3xl mx-auto">
+  <div class="bg-black text-white py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-4">貢獻者</h1>
+      <p class="text-xl max-w-3xl">
         vTaiwan 是一個開放的社群專案，由許多熱心的貢獻者共同協作完成。
         以下是部分主要貢獻者，感謝他們的付出與努力。
       </p>
+    </div>
+  </div>
+  
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-5xl mx-auto">
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {contributors.map(contributor => (
@@ -28,15 +32,7 @@ import { contributors } from '../data/contributors.js';
         ))}
       </div>
       
-      <div class="mt-16 text-center">
-        <h2 class="text-2xl font-bold mb-6">加入我們</h2>
-        <p class="text-lg mb-8 max-w-2xl mx-auto">
-          vTaiwan 歡迎各界人士參與貢獻，無論是提供意見、參與討論、協助開發或推廣宣傳，都能為數位民主的發展帶來正面影響。
-        </p>
-        <a href="https://github.com/vtaiwan" class="btn-primary inline-block">
-          在 GitHub 上貢獻
-        </a>
-      </div>
+
     </div>
   </main>
 </BaseLayout>
