@@ -193,8 +193,6 @@ declare module 'astro:content' {
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
 };
-"faq": {
-};
 "meetups": {
 "past-meetup-example.md": {
 	id: "past-meetup-example.md";
@@ -203,10 +201,6 @@ declare module 'astro:content' {
   collection: "meetups";
   data: InferEntrySchema<"meetups">
 } & { render(): Render[".md"] };
-};
-"pages": {
-};
-"projects": {
 };
 
 	};
