@@ -106,7 +106,6 @@ export default defineComponent({
 
 
 .card {
-  width: 300px;
   height: 300px;
 }
 
