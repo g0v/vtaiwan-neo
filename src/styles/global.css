@@ -83,3 +83,20 @@
     @apply rounded-lg;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .thin-only {
+    display: none !important;
+  }
+}
+
+.carousel__next {
+  border-radius: 50% !important;
+  background-color: #fff !important;
+}
+
+.carousel__prev {
+  border-radius: 50% !important;
+  background-color: #fff !important;
+}
+  

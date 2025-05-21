@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import IconWrapper from '../components/ui/IconWrapper.astro';
+import News from '../vue_components/home_News.vue';
 
 // 移除了 featuredProjects, upcomingMeetups, latestPosts 資料陣列
 ---
@@ -59,6 +60,16 @@ import IconWrapper from '../components/ui/IconWrapper.astro';
           <p class="text-gray-700">將公民共識轉化為具體政策建議，提交給相關政府部門參考與執行。</p>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-12 text-center">
+        <span class="title-underline">最新消息</span>
+      </h2>
+      <News client:only/>
     </div>
   </section>
 
