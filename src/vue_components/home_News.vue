@@ -47,7 +47,7 @@ export default defineComponent({
     return {
       allNews: [],
       itemsToShow: 1.5,
-      autoplay: 2000,
+      autoplay: 3000,
       wrapAround: true
     }
   },
@@ -107,6 +107,7 @@ export default defineComponent({
 
 .card {
   height: 300px;
+  max-width: 600px;
 }
 
 .card-content {
