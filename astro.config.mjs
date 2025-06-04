@@ -11,7 +11,4 @@ export default defineConfig({
   ],
   site: 'https://vtaiwan.org', // 替換為您的實際域名
   output: 'static',
-  content: {
-    collections: ['meetups', 'blog'],
-  },
 });
