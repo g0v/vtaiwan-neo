@@ -19,7 +19,12 @@ const blogs = await getBlogs();
 
 <Layout title="vTaiwan 部落格">
   <main class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">vTaiwan 部落格</h1>
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">vTaiwan 部落格</h1>
+      <a href="/blogs/post_blog" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        發布新文章
+      </a>
+    </div>
     
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {blogs.map((blog) => (

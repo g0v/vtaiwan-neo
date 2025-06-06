@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/BaseLayout.astro';
+import BlogForm from '../../vue_components/BlogForm.vue';
+---
+
+<Layout title="發布新文章 - vTaiwan 部落格">
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8">發布新文章</h1>
+    <BlogForm client:load />
+  </main>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+  }
+</style> 
