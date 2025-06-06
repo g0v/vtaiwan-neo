@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/BaseLayout.astro';
+import { database, blogsRef } from '../../lib/firebase';
+import { get, onValue } from 'firebase/database';
+
+// 從 Firebase 讀取部落格資料
+const getBlogs = async () => {
+  try {
+    const snapshot = await get(blogsRef);
+    return snapshot.val() || [];
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    return [];
+  }
+};
+
+const blogs = await getBlogs();
+---
+
+<Layout title="vTaiwan 部落格">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">vTaiwan 部落格</h1>
+    
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {blogs.map((blog) => (
+        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div class="p-6">
+            <h2 class="text-xl font-semibold mb-2">
+              <a href={`/blogs/${blog.title.toLowerCase().replace(/\s+/g, '-')}`} class="hover:text-blue-600">
+                {blog.title}
+              </a>
+            </h2>
+            <div class="text-sm text-gray-600 mb-4">
+              <span class="mr-4">作者：{blog.author}</span>
+              <span>發布日期：{blog.date}</span>
+            </div>
+            <p class="text-gray-700 mb-4">{blog.summary}</p>
+            <div class="flex flex-wrap gap-2">
+              {blog.tags.map((tag) => (
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+  }
+</style> 
