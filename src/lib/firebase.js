@@ -26,5 +26,6 @@ export const auth = getAuth(app);
 export const storage = getStorage(app);
 
 export const blogsRef = ref(database, "blogs");
+export const usersRef = ref(database, "users");
 
 export default app; 
