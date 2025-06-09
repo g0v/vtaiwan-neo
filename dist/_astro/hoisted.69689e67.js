@@ -1,1 +1,0 @@
-import"./hoisted.f0c52aa9.js";const e=document.getElementById("blog-search");e&&e.addEventListener("keypress",t=>{if(t.key==="Enter"){const n=e.value.trim();n&&(window.location.href=`/blog/search?q=${encodeURIComponent(n)}`)}});
