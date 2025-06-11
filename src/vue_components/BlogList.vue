@@ -7,7 +7,7 @@
     >
       <div class="p-6">
         <h2 class="text-xl font-semibold mb-2">
-          <a :href="`/blogs/${blog.title.toLowerCase().replace(/\s+/g, '-')}`" class="hover:text-blue-600">
+          <a :href="`/blogs/${blog.slug}`" class="hover:text-blue-600">
             {{ blog.title }}
           </a>
         </h2>
@@ -45,14 +45,20 @@ import { onValue } from 'firebase/database';
 
 const blogs = ref([]);
 
+// 改進的 slug 生成函數
+const generateSlug = (title) => {
+  return encodeURIComponent(title);
+};
+
 onMounted(() => {
   console.log('Setting up blogs listener');
   onValue(blogsRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      // 將物件轉換為陣列，並加入 id
+      // 將物件轉換為陣列，並加入 id 和 slug
       blogs.value = Object.entries(data).map(([id, blog]) => ({
         id,
+        slug: generateSlug(blog.title),
         ...blog
       })).sort((a, b) => new Date(b.date) - new Date(a.date));
     } else {
